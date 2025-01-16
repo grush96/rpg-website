@@ -1,3 +1,5 @@
+"use client";
+
 import { Bird, Rabbit, Turtle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,16 +20,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import EnergyCardWrapper from "@/components/charactercreator/energy-card";
+
+import { useState, useEffect } from "react";
+
+import EnergyWrapper from "./energy-card";
+import SubclassSelect from "./subclass-select";
+import StyleSelect from "./style-select";
 
 export default function CombatSection() {
+  const [prof, setProf] = useState<string>("");
+
+  const classChoice = (value: string) => {
+    setProf(value);
+  };
+
   return (
     <fieldset className="grid gap-6 rounded-lg border p-4 bg-white">
       <legend className="-ml-1 px-1 text-sm font-medium">Combat</legend>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
         <div className="grid gap-3">
           <Label htmlFor="class">Class</Label>
-          <Select>
+          <Select onValueChange={classChoice} defaultValue="">
             <SelectTrigger
               id="class"
               className="items-start [&_[data-description]]:hidden"
@@ -48,130 +61,10 @@ export default function CombatSection() {
             </SelectContent>
           </Select>
         </div>
-        <div className="grid gap-3">
-          <Label htmlFor="subclass">Subclass</Label>
-          <Select>
-            <SelectTrigger
-              id="subclass"
-              className="items-start [&_[data-description]]:hidden"
-            >
-              <SelectValue placeholder="Select a subclass" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="genesis">
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <Rabbit className="size-5" />
-                  <div className="grid gap-0.5">
-                    <p>
-                      Neural{" "}
-                      <span className="font-medium text-foreground">
-                        Genesis
-                      </span>
-                    </p>
-                    <p className="text-xs" data-description>
-                      Our fastest model for general use cases.
-                    </p>
-                  </div>
-                </div>
-              </SelectItem>
-              <SelectItem value="explorer">
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <Bird className="size-5" />
-                  <div className="grid gap-0.5">
-                    <p>
-                      Neural{" "}
-                      <span className="font-medium text-foreground">
-                        Explorer
-                      </span>
-                    </p>
-                    <p className="text-xs" data-description>
-                      Performance and speed for efficiency.
-                    </p>
-                  </div>
-                </div>
-              </SelectItem>
-              <SelectItem value="quantum">
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <Turtle className="size-5" />
-                  <div className="grid gap-0.5">
-                    <p>
-                      Neural{" "}
-                      <span className="font-medium text-foreground">
-                        Quantum
-                      </span>
-                    </p>
-                    <p className="text-xs" data-description>
-                      The most powerful model for complex computations.
-                    </p>
-                  </div>
-                </div>
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <SubclassSelect prof={prof} />
       </div>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="grid gap-3">
-          <Label htmlFor="style">Style</Label>
-          <Select>
-            <SelectTrigger
-              id="style"
-              className="items-start [&_[data-description]]:hidden"
-            >
-              <SelectValue placeholder="Select a style" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="genesis">
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <Rabbit className="size-5" />
-                  <div className="grid gap-0.5">
-                    <p>
-                      Neural{" "}
-                      <span className="font-medium text-foreground">
-                        Genesis
-                      </span>
-                    </p>
-                    <p className="text-xs" data-description>
-                      Our fastest model for general use cases.
-                    </p>
-                  </div>
-                </div>
-              </SelectItem>
-              <SelectItem value="explorer">
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <Bird className="size-5" />
-                  <div className="grid gap-0.5">
-                    <p>
-                      Neural{" "}
-                      <span className="font-medium text-foreground">
-                        Explorer
-                      </span>
-                    </p>
-                    <p className="text-xs" data-description>
-                      Performance and speed for efficiency.
-                    </p>
-                  </div>
-                </div>
-              </SelectItem>
-              <SelectItem value="quantum">
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <Turtle className="size-5" />
-                  <div className="grid gap-0.5">
-                    <p>
-                      Neural{" "}
-                      <span className="font-medium text-foreground">
-                        Quantum
-                      </span>
-                    </p>
-                    <p className="text-xs" data-description>
-                      The most powerful model for complex computations.
-                    </p>
-                  </div>
-                </div>
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <StyleSelect prof={prof} />
         <div className="grid gap-3">
           <Label htmlFor="abilities" className="text-center">
             Abilities
@@ -217,18 +110,7 @@ export default function CombatSection() {
           </Dialog>
         </div>
       </div>
-      <fieldset className="grid relative gap-6 rounded-lg border p-4">
-        <legend className="-ml-1 px-1 text-sm font-medium">Energy</legend>
-        <span className="absolute -top-6 right-3 p-1 bg-white">
-          Points Remaining: 10
-        </span>
-        <div className="flex flex-wrap">
-          <EnergyCardWrapper />
-          <div className="grow shrink basis-1/5 min-w-32 max-w-56 mr-2 mb-2"></div>
-          <div className="grow shrink basis-1/5 min-w-32 max-w-56 mr-2 mb-2"></div>
-          <div className="grow shrink basis-1/5 min-w-32 max-w-56 mr-2 mb-2"></div>
-        </div>
-      </fieldset>
+      <EnergyWrapper />
     </fieldset>
   );
 }

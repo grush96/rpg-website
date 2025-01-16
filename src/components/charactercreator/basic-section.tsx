@@ -1,3 +1,7 @@
+"use client";
+
+import { useBoundStore } from "@/lib/providers/store-provider";
+
 import { Info } from "lucide-react";
 import {
   Dialog,
@@ -19,6 +23,13 @@ import {
 } from "@/components/ui/select";
 
 export default function BasicSection() {
+  const { level, setLevel, setPoints } = useBoundStore((state) => state);
+
+  function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setLevel(+e.target.value);
+    setPoints();
+  }
+
   return (
     <fieldset className="grid gap-6 rounded-lg border p-4 bg-white">
       <legend className="-ml-1 px-1 text-sm font-medium">Basic</legend>
@@ -29,7 +40,14 @@ export default function BasicSection() {
         </div>
         <div className="grid gap-3">
           <Label htmlFor="level">Level</Label>
-          <Input id="level" type="number" min="1" max="20" defaultValue="1" />
+          <Input
+            id="level"
+            type="number"
+            min="1"
+            max="20"
+            value={level}
+            onChange={(e) => inputChange(e)}
+          />
         </div>
       </div>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">

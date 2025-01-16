@@ -1,3 +1,11 @@
+/* 
+TODO 1: Implement info button on Level, Energy (just info), Species, Theme, Class, Subclass, and Style for choice
+   ?: Could also add for abilities, knowledge, and attributes with just info button
+   ?: Should subclass and style have info that tells people to select class before options
+TODO 2: Implement selection of Abilities, Knowledge, and Attributes (do any other than abilities depend on other choices)
+TODO 3: Make Character Sheet(s)
+*/
+
 import { CornerDownLeft, Mic, Paperclip } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

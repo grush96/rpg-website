@@ -12,11 +12,11 @@ export default function Page() {
         className="relative flex-col items-start gap-8 md:flex"
         x-chunk="dashboard-03-chunk-0"
       >
-        <form className="grid w-full items-start gap-6">
+        <div className="grid w-full items-start gap-6">
           <BasicSection />
           <CombatSection />
           <ExplorationSection />
-        </form>
+        </div>
       </div>
       <CharacterSheet />
     </main>
